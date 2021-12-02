@@ -1,0 +1,19 @@
+---
+#   __       _ _ ____  _                    ___            _        
+#  / _| __ _(_) |___ \| |__   __ _ _ __    / / |_ __ _ ___| | _____ 
+# | |_ / _` | | | __) | '_ \ / _` | '_ \  / /| __/ _` / __| |/ / __|
+# |  _| (_| | | |/ __/| |_) | (_| | | | |/ / | || (_| \__ \   <\__ \
+# |_|  \__,_|_|_|_____|_.__/ \__,_|_| |_/_/   \__\__,_|___/_|\_\___/
+# boot-script
+- name: boot-script | fail2ban should be started
+  when: fail2ban.started == true
+  service:
+    name:    "fail2ban"
+    enabled: "yes"
+
+- name: boot-script | fail2ba should be enabled
+  when: fail2ban.enabled == true
+  service:
+    name:  "fail2ban"
+    state: "started"
+

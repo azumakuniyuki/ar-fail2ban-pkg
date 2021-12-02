@@ -1,0 +1,45 @@
+# {{ fail2ban.configroot }}/jail.local
+# -------------------------------------------------------------------------------------------------
+[DEFAULT]
+ignoreip    = 127.0.0.0/8 192.0.2.0/24
+banaction   = firewallcmd-ipset
+backend     = systemd
+bantime     = 1h
+findtime    = 5m
+maxretry    = 5
+sender      = {{ fail2ban.alert.sender }}
+destemail   = {{ fail2ban.alert.rcptto }}
+
+# -------------------------------------------------------------------------------------------------
+# To use more aggressive sshd modes set filter parameter "mode" in jail.local: normal (default),
+# ddos, extra or aggressive (combines all). See "tests/files/logs/sshd" or "filter.d/sshd.conf" for
+# usage example and details.
+[sshd]
+enabled     = true
+bantime     = 8h
+port        = 22
+
+# -------------------------------------------------------------------------------------------------
+[postfix]
+enabled     = true
+port        = 25,465,587
+bantime     = 2m
+
+[postfix-sasl]
+enabled     = true
+port        = 587
+bantime     = 1m
+
+# -------------------------------------------------------------------------------------------------
+[dovecot]
+enabled     = true
+port        = 110,143,993,995
+bantime     = 1m
+
+# -------------------------------------------------------------------------------------------------
+[recidive]
+enabled     = true
+bantime     = 7d
+findtime    = 1d
+maxretry    = 10
+
